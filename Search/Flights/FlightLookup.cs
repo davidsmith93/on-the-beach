@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using Newtonsoft.Json;
 
 namespace Search.Flights;
@@ -44,12 +43,12 @@ public class FlightLookup
 }
 
 public record Flight(
-    [JsonPropertyAttribute("id")] int Id,
-    [JsonPropertyAttribute("airline")] string Airline,
-    [JsonPropertyAttribute("from")] string From,
-    [JsonPropertyAttribute("to")] string To,
-    [JsonPropertyAttribute("price")] decimal Price,
-    [JsonPropertyAttribute("departure_date")] DateOnly DepartureDate
+    [JsonProperty("id")] int Id,
+    [JsonProperty("airline")] string Airline,
+    [JsonProperty("from")] string From,
+    [JsonProperty("to")] string To,
+    [JsonProperty("price")] decimal Price,
+    [JsonProperty("departure_date")] DateOnly DepartureDate
 )
 {
 }
