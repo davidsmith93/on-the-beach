@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Search.Exception;
 
 namespace Search.Flights;
 
@@ -7,38 +8,41 @@ public class FlightLookup
 
     private static readonly Lazy<FlightLookup> Instance = new(() => new());
 
-    private List<Flight> Flights;
+    private List<Flight> Flights = [];
 
-    public static FlightLookup GetInstance() {
+    public static FlightLookup GetInstance()
+    {
         return Instance.Value;
     }
 
-    public FlightLookup() {
-        Load();
+    public List<Flight> Search(string from, string to, DateOnly date)
+    {
+        if(Flights.Count == 0)
+        {
+            Load();
+        }
+
+        return Flights.FindAll(flight => flight.From == from && flight.To == to && flight.DepartureDate == date)
+            .OrderBy(flight => flight.Price)
+            .ToList();
     }
 
     private void Load()
     {
+        string fileName = "flights.json";
         try
         {
             using StreamReader reader = new("flights.json");
 
             string content = reader.ReadToEnd();
 
-            List<Flight>? flights = JsonConvert.DeserializeObject<List<Flight>>(content) ?? throw new Exception();
+            List<Flight>? flights = JsonConvert.DeserializeObject<List<Flight>>(content) ?? throw new NoDataException($"{fileName} had no data to read");
             this.Flights = flights;
         }
         catch (IOException e)
         {
-            Console.WriteLine("The file could not be read:");
-            Console.WriteLine(e.Message);
-            
-            throw new Exception();
+            throw new FileParseException($"{fileName} could not be read", e);
         }
-    }
-
-    public List<Flight> Search(string from, string to, DateOnly date) {
-        return Flights.FindAll(flight => flight.From == from && flight.To == to && flight.DepartureDate == date);
     }
 }
 
