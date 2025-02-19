@@ -27,12 +27,12 @@ public class FlightLookupTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(flight.Id, NUnit.Framework.Is.EqualTo(2), "Id not equal");
-            Assert.That(flight.From, NUnit.Framework.Is.EqualTo(from), "From not equal");
-            Assert.That(flight.To, NUnit.Framework.Is.EqualTo(to), "To not equal");
-            Assert.That(flight.Airline, NUnit.Framework.Is.EqualTo("Oceanic Airlines"), "Airline not equal");
-            Assert.That(flight.Price, NUnit.Framework.Is.EqualTo(245), "Price not equal");
-            Assert.That(flight.DepartureDate, NUnit.Framework.Is.EqualTo(date), "DepartureDate not equal");
+            Assert.That(flight.Id, Is.EqualTo(2), "Id not equal");
+            Assert.That(flight.From, Is.EqualTo(from), "From not equal");
+            Assert.That(flight.To, Is.EqualTo(to), "To not equal");
+            Assert.That(flight.Airline, Is.EqualTo("Oceanic Airlines"), "Airline not equal");
+            Assert.That(flight.Price, Is.EqualTo(245), "Price not equal");
+            Assert.That(flight.DepartureDate, Is.EqualTo(date), "DepartureDate not equal");
         });
     }
 
@@ -50,23 +50,23 @@ public class FlightLookupTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(flight_1.Id, NUnit.Framework.Is.EqualTo(11), "Id not equal");
-            Assert.That(flight_1.From, NUnit.Framework.Is.EqualTo(from), "From not equal");
-            Assert.That(flight_1.To, NUnit.Framework.Is.EqualTo(to), "To not equal");
-            Assert.That(flight_1.Airline, NUnit.Framework.Is.EqualTo("First Class Air"), "Airline not equal");
-            Assert.That(flight_1.Price, NUnit.Framework.Is.EqualTo(155), "Price not equal");
-            Assert.That(flight_1.DepartureDate, NUnit.Framework.Is.EqualTo(date), "DepartureDate not equal");
+            Assert.That(flight_1.Id, Is.EqualTo(11), "Id not equal");
+            Assert.That(flight_1.From, Is.EqualTo(from), "From not equal");
+            Assert.That(flight_1.To, Is.EqualTo(to), "To not equal");
+            Assert.That(flight_1.Airline, Is.EqualTo("First Class Air"), "Airline not equal");
+            Assert.That(flight_1.Price, Is.EqualTo(155), "Price not equal");
+            Assert.That(flight_1.DepartureDate, Is.EqualTo(date), "DepartureDate not equal");
         });
 
         Flight flight_2 = flights[1];
         Assert.Multiple(() =>
         {
-            Assert.That(flight_2.Id, NUnit.Framework.Is.EqualTo(10), "Id not equal");
-            Assert.That(flight_2.From, NUnit.Framework.Is.EqualTo(from), "From not equal");
-            Assert.That(flight_2.To, NUnit.Framework.Is.EqualTo(to), "To not equal");
-            Assert.That(flight_2.Airline, NUnit.Framework.Is.EqualTo("First Class Air"), "Airline not equal");
-            Assert.That(flight_2.Price, NUnit.Framework.Is.EqualTo(225), "Price not equal");
-            Assert.That(flight_2.DepartureDate, NUnit.Framework.Is.EqualTo(date), "DepartureDate not equal");
+            Assert.That(flight_2.Id, Is.EqualTo(10), "Id not equal");
+            Assert.That(flight_2.From, Is.EqualTo(from), "From not equal");
+            Assert.That(flight_2.To, Is.EqualTo(to), "To not equal");
+            Assert.That(flight_2.Airline, Is.EqualTo("First Class Air"), "Airline not equal");
+            Assert.That(flight_2.Price, Is.EqualTo(225), "Price not equal");
+            Assert.That(flight_2.DepartureDate, Is.EqualTo(date), "DepartureDate not equal");
         });
     }
 
@@ -84,12 +84,12 @@ public class FlightLookupTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(flight.Id, NUnit.Framework.Is.EqualTo(8), "Id not equal");
-            Assert.That(flight.From, NUnit.Framework.Is.EqualTo(from), "From not equal");
-            Assert.That(flight.To, NUnit.Framework.Is.EqualTo(to), "To not equal");
-            Assert.That(flight.Airline, NUnit.Framework.Is.EqualTo("Fresh Airways"), "Airline not equal");
-            Assert.That(flight.Price, NUnit.Framework.Is.EqualTo(175), "Price not equal");
-            Assert.That(flight.DepartureDate, NUnit.Framework.Is.EqualTo(date), "DepartureDate not equal");
+            Assert.That(flight.Id, Is.EqualTo(8), "Id not equal");
+            Assert.That(flight.From, Is.EqualTo(from), "From not equal");
+            Assert.That(flight.To, Is.EqualTo(to), "To not equal");
+            Assert.That(flight.Airline, Is.EqualTo("Fresh Airways"), "Airline not equal");
+            Assert.That(flight.Price, Is.EqualTo(175), "Price not equal");
+            Assert.That(flight.DepartureDate, Is.EqualTo(date), "DepartureDate not equal");
         });
     }
 
