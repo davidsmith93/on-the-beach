@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Search.Exception;
+using Search.Utilities;
 
 namespace Search.Flights;
 
@@ -8,7 +8,7 @@ public class FlightLookup
 
     private static readonly Lazy<FlightLookup> Instance = new(() => new());
 
-    private List<Flight> Flights = [];
+    private List<FlightEntity> Flights = [];
 
     public static FlightLookup GetInstance()
     {
@@ -23,6 +23,14 @@ public class FlightLookup
         }
 
         return Flights.FindAll(flight => flight.From == from && flight.To == to && flight.DepartureDate == date)
+            .ConvertAll(flight => new Flight(
+                flight.Id,
+                flight.Airline,
+                flight.From,
+                flight.To,
+                flight.Price,
+                flight.DepartureDate
+            ))
             .OrderBy(flight => flight.Price)
             .ToList();
     }
@@ -30,29 +38,28 @@ public class FlightLookup
     private void Load()
     {
         string fileName = "flights.json";
-        try
-        {
-            using StreamReader reader = new("flights.json");
+        this.Flights = FileReader.GetInstance().Load<List<FlightEntity>>(fileName);
+    }
 
-            string content = reader.ReadToEnd();
-
-            List<Flight>? flights = JsonConvert.DeserializeObject<List<Flight>>(content) ?? throw new NoDataException($"{fileName} had no data to read");
-            this.Flights = flights;
-        }
-        catch (IOException e)
-        {
-            throw new FileParseException($"{fileName} could not be read", e);
-        }
+    public record FlightEntity(
+        [JsonProperty("id")] int Id,
+        [JsonProperty("airline")] string Airline,
+        [JsonProperty("from")] string From,
+        [JsonProperty("to")] string To,
+        [JsonProperty("price")] decimal Price,
+        [JsonProperty("departure_date")] DateOnly DepartureDate
+    )
+    {
     }
 }
 
 public record Flight(
-    [JsonProperty("id")] int Id,
-    [JsonProperty("airline")] string Airline,
-    [JsonProperty("from")] string From,
-    [JsonProperty("to")] string To,
-    [JsonProperty("price")] decimal Price,
-    [JsonProperty("departure_date")] DateOnly DepartureDate
+    int Id,
+    string Airline,
+    string From,
+    string To,
+    decimal Price,
+    DateOnly DepartureDate
 )
 {
 }
