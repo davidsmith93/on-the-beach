@@ -6,13 +6,20 @@ namespace Search.Hotels;
 public class HotelLookup
 {
 
-    private static readonly Lazy<HotelLookup> Instance = new(() => new());
+    private static readonly Lazy<HotelLookup> INSTANCE = new(() => new());
+    private static readonly string FILE_NAME = "hotels.json";
+
+    private readonly FileReader fileReader;
 
     private List<HotelEntity> Hotels = [];
 
     public static HotelLookup GetInstance()
     {
-        return Instance.Value;
+        return INSTANCE.Value;
+    }
+
+    public HotelLookup() {
+        fileReader = FileReader.GetInstance();
     }
 
     public List<Hotel> Search(string localAirport, DateOnly date, int numberOfNights)
@@ -39,8 +46,7 @@ public class HotelLookup
 
     private void Load()
     {
-        string fileName = "hotels.json";
-        this.Hotels = FileReader.GetInstance().Load<List<HotelEntity>>(fileName);
+        Hotels = fileReader.Load<List<HotelEntity>>(FILE_NAME);
     }
 
     private record HotelEntity(

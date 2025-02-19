@@ -6,13 +6,19 @@ namespace Search.Flights;
 public class FlightLookup
 {
 
-    private static readonly Lazy<FlightLookup> Instance = new(() => new());
+    private static readonly Lazy<FlightLookup> INSTANCE = new(() => new());
+    private static readonly string FILE_NAME = "flights.json";
 
+    private readonly FileReader fileReader;
     private List<FlightEntity> Flights = [];
 
     public static FlightLookup GetInstance()
     {
-        return Instance.Value;
+        return INSTANCE.Value;
+    }
+
+    public FlightLookup() {
+        fileReader = FileReader.GetInstance();
     }
 
     public List<Flight> Search(string from, string to, DateOnly date)
@@ -37,8 +43,7 @@ public class FlightLookup
 
     private void Load()
     {
-        string fileName = "flights.json";
-        this.Flights = FileReader.GetInstance().Load<List<FlightEntity>>(fileName);
+        Flights = fileReader.Load<List<FlightEntity>>(FILE_NAME);
     }
 
     public record FlightEntity(
