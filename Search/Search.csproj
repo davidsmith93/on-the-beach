@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <ContentWithTargetPath Include="..\data\**">
+      <ContentWithTargetPath Include="..\data\flights.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+      </ContentWithTargetPath>
+
+      <ContentWithTargetPath Include="..\data\hotels.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         <TargetPath>%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
       </ContentWithTargetPath>
