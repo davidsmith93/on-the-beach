@@ -16,7 +16,8 @@ public class HolidaySearchService(IFlightLookup flightLookup, IHotelLookup hotel
         List<HolidaySearchResult> results = [];
 
         flights.ForEach(flight => {
-            hotels.ForEach(hotel => {
+            hotels.FindAll(hotel => hotel.LocalAirports.Contains(flight.To))
+            .ForEach(hotel => {
                 results.Add(CreateHolidaySearchResult(flight, hotel));
             });
         });

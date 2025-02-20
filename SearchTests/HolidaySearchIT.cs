@@ -98,4 +98,37 @@ public class HolidaySearchIT
             Assert.That(result.Hotel.Id, Is.EqualTo(6));
         });
     }
+
+    [Test]
+    //Could be used to display the best deals available
+    public void Search_FromAnywhereToAnywhereOnJulyFirstTwentyThreeForFourteenNights_ReturnsExpectedResults()
+    {
+        var request = new HolidaySearchRequest(
+            null,
+            null,
+            new(2023, 7, 1),
+            new(14)
+        );
+        var results = Subject.Search(request).Results;
+
+        Assert.That(results, Has.Count.EqualTo(3));
+
+        Assert.Multiple(() => {
+            Assert.That(results[0].Flight.Id, Is.EqualTo(11));
+            Assert.That(results[0].Hotel.Id, Is.EqualTo(12));
+            Assert.That(results[0].TotalPrice.Value, Is.EqualTo(785));
+        });
+
+        Assert.Multiple(() => {
+            Assert.That(results[1].Flight.Id, Is.EqualTo(10));
+            Assert.That(results[1].Hotel.Id, Is.EqualTo(12));
+            Assert.That(results[1].TotalPrice.Value, Is.EqualTo(855));
+        });
+
+        Assert.Multiple(() => {
+            Assert.That(results[2].Flight.Id, Is.EqualTo(2));
+            Assert.That(results[2].Hotel.Id, Is.EqualTo(12));
+            Assert.That(results[2].TotalPrice.Value, Is.EqualTo(875));
+        });
+    }
 }
