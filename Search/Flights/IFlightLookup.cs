@@ -2,5 +2,5 @@ namespace Search.Flights;
 
 public interface IFlightLookup
 {
-    List<Flight> Search(string from, string to, DateOnly date);
+    List<Flight> Search(Airport? from, Airport? to, DateOnly date);
 }
