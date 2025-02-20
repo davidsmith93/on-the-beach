@@ -3,24 +3,11 @@ using Search.Utilities;
 
 namespace Search.Hotels;
 
-public class HotelLookup
-{
-
-    private static readonly Lazy<HotelLookup> INSTANCE = new(() => new());
+public class HotelLookup(IFileReader fileReader) : IHotelLookup {
     private static readonly string FILE_NAME = "hotels.json";
 
-    private readonly FileReader fileReader;
-
+    private readonly IFileReader fileReader = fileReader;
     private List<HotelEntity> Hotels = [];
-
-    public static HotelLookup GetInstance()
-    {
-        return INSTANCE.Value;
-    }
-
-    public HotelLookup() {
-        fileReader = FileReader.GetInstance();
-    }
 
     public List<Hotel> Search(string localAirport, DateOnly date, int numberOfNights)
     {
@@ -48,17 +35,17 @@ public class HotelLookup
     {
         Hotels = fileReader.Load<List<HotelEntity>>(FILE_NAME);
     }
+}
 
-    private record HotelEntity(
-        [JsonProperty("id")] int Id,
-        [JsonProperty("name")] string Name,
-        [JsonProperty("arrival_date")] DateOnly ArrivalDate,
-        [JsonProperty("price_per_night")] decimal PricePerNight,
-        [JsonProperty("local_airports")] List<string> LocalAirports,
-        [JsonProperty("nights")] int Nights
-    )
-    {
-    }
+public record HotelEntity(
+    [JsonProperty("id")] int Id,
+    [JsonProperty("name")] string Name,
+    [JsonProperty("arrival_date")] DateOnly ArrivalDate,
+    [JsonProperty("price_per_night")] decimal PricePerNight,
+    [JsonProperty("local_airports")] List<string> LocalAirports,
+    [JsonProperty("nights")] int Nights
+)
+{
 }
 
 public record Hotel(

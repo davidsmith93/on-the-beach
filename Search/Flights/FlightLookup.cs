@@ -3,23 +3,12 @@ using Search.Utilities;
 
 namespace Search.Flights;
 
-public class FlightLookup
+public class FlightLookup(IFileReader fileReader) : IFlightLookup
 {
-
-    private static readonly Lazy<FlightLookup> INSTANCE = new(() => new());
     private static readonly string FILE_NAME = "flights.json";
 
-    private readonly FileReader fileReader;
+    private readonly IFileReader fileReader = fileReader;
     private List<FlightEntity> Flights = [];
-
-    public static FlightLookup GetInstance()
-    {
-        return INSTANCE.Value;
-    }
-
-    public FlightLookup() {
-        fileReader = FileReader.GetInstance();
-    }
 
     public List<Flight> Search(string from, string to, DateOnly date)
     {
@@ -38,6 +27,7 @@ public class FlightLookup
                 flight.DepartureDate
             ))
             .OrderBy(flight => flight.Price)
+            .ThenBy(flight => flight.Id)
             .ToList();
     }
 
@@ -45,17 +35,17 @@ public class FlightLookup
     {
         Flights = fileReader.Load<List<FlightEntity>>(FILE_NAME);
     }
+}
 
-    public record FlightEntity(
-        [JsonProperty("id")] int Id,
-        [JsonProperty("airline")] string Airline,
-        [JsonProperty("from")] string From,
-        [JsonProperty("to")] string To,
-        [JsonProperty("price")] decimal Price,
-        [JsonProperty("departure_date")] DateOnly DepartureDate
-    )
-    {
-    }
+public record FlightEntity(
+    [JsonProperty("id")] int Id,
+    [JsonProperty("airline")] string Airline,
+    [JsonProperty("from")] string From,
+    [JsonProperty("to")] string To,
+    [JsonProperty("price")] decimal Price,
+    [JsonProperty("departure_date")] DateOnly DepartureDate
+)
+{
 }
 
 public record Flight(
