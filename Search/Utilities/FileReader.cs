@@ -3,16 +3,8 @@ using Search.Exception;
 
 namespace Search.Utilities;
 
-public class FileReader {
-
-    private static readonly Lazy<FileReader> Instance = new(() => new());
-
-    public static FileReader GetInstance()
-    {
-        return Instance.Value;
-    }
-
-    public T Load<T>(string fileName) {
+public class FileReader : IFileReader {
+        public T Load<T>(string fileName) {
         try
         {
             using StreamReader reader = new(fileName);
